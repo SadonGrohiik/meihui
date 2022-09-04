@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "buyers",
+  "info": {
+    "singularName": "buyer",
+    "pluralName": "buyers",
+    "displayName": "Buyer",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "Last_name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "password": {
+      "type": "password",
+      "required": true
+    },
+    "Approved": {
+      "type": "boolean",
+      "default": false
+    },
+    "Address": {
+      "type": "component",
+      "repeatable": true,
+      "component": "buyer.address",
+      "required": true
+    }
+  }
+}

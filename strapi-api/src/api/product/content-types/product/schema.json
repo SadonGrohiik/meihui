@@ -1,0 +1,71 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Description": {
+      "type": "richtext"
+    },
+    "Price": {
+      "type": "biginteger",
+      "required": true
+    },
+    "Stock": {
+      "type": "biginteger"
+    },
+    "Images": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "color": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::color.color",
+      "inversedBy": "products"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "products"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "products"
+    },
+    "instagram_hashtags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::instagram-hashtag.instagram-hashtag",
+      "inversedBy": "products"
+    },
+    "Details": {
+      "type": "component",
+      "repeatable": false,
+      "component": "product.details-list"
+    }
+  }
+}

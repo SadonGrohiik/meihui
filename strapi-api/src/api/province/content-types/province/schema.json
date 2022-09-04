@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "provinces",
+  "info": {
+    "singularName": "province",
+    "pluralName": "provinces",
+    "displayName": "province"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    }
+  }
+}

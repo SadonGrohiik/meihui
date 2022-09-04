@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_product_details_lists",
+  "info": {
+    "displayName": "DetailsList",
+    "icon": "align-left"
+  },
+  "options": {},
+  "attributes": {
+    "Detail": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.details"
+    }
+  }
+}
