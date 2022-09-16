@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wig_constructions",
+  "info": {
+    "singularName": "wig-construction",
+    "pluralName": "wig-constructions",
+    "displayName": "Wig_construction",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

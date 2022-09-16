@@ -35,6 +35,9 @@
     },
     "primary": {
       "type": "boolean"
+    },
+    "slug": {
+      "type": "string"
     }
   }
 }

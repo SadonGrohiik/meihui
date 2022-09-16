@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wig_lengths",
+  "info": {
+    "singularName": "wig-length",
+    "pluralName": "wig-lengths",
+    "displayName": "wig_length",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

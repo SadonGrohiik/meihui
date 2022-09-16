@@ -62,10 +62,21 @@
       "target": "api::instagram-hashtag.instagram-hashtag",
       "inversedBy": "products"
     },
-    "Details": {
-      "type": "component",
-      "repeatable": false,
-      "component": "product.details-list"
+    "Info": {
+      "type": "dynamiczone",
+      "components": [
+        "product.wig-details"
+      ],
+      "required": true
+    },
+    "cost": {
+      "type": "biginteger",
+      "required": true
+    },
+    "discount": {
+      "type": "integer",
+      "max": 100,
+      "min": 0
     }
   }
 }

@@ -1,0 +1,45 @@
+{
+  "collectionName": "components_product_wig_details",
+  "info": {
+    "displayName": "wig_details",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "wig_length": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::wig-length.wig-length"
+    },
+    "wig_construction": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::wig-construction.wig-construction"
+    },
+    "wig_crown": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::wig-crown.wig-crown"
+    },
+    "wig_top": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::wig-top.wig-top"
+    },
+    "wig_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::wig-type.wig-type"
+    },
+    "wig_material": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::wig-material.wig-material"
+    },
+    "wig_style": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::wig-style.wig-style"
+    }
+  }
+}
