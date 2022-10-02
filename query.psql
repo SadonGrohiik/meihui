@@ -1,1 +1,41 @@
-SELECT * FROM products
+-- INSERT INTO tags(tag,created_at,updated_at,published_at)
+-- VALUES('omg', NOW(), NOW(), NOW()),
+-- ('what', NOW(), NOW(), NOW()),
+-- ('رنگ روشن', NOW(), NOW(), NOW()),
+-- ('کاسپلی', NOW(), NOW(), NOW());
+
+-- INSERT INTO wig_lengths(value)
+-- VALUES
+-- ('خیلی کوتاه'),
+-- ('کوتاه'),
+-- ('متوسط'),
+-- ('بلند'),
+-- ('خیلی بلند');
+
+-- INSERT INTO wig_materials(value)
+-- VALUES
+-- ('مو طبیعی'),
+-- ('مصنوعی حرارت پذیر');
+
+-- INSERT INTO wig_tops(value)
+-- VALUES
+-- ('کف پوست'),
+-- ('پوش');
+
+-- INSERT INTO wig_types(value)
+-- VALUES
+-- ('کاسپلی'),
+-- ('فانتزی'),
+-- ('طبیعی');
+
+INSERT INTO wig_crowns(value)
+VALUES
+('چتری'),
+('فرق وسط'),
+('چتری بلند');
+
+INSERT INTO wig_styles(value)
+VALUES
+('فر'),
+('صاف'),
+('حالت دار');
