@@ -2,13 +2,15 @@
   "collectionName": "components_product_details",
   "info": {
     "displayName": "Details",
-    "icon": "eye"
+    "icon": "eye",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "Name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": false
     },
     "Value": {
       "type": "string",

@@ -62,13 +62,6 @@
       "target": "api::instagram-hashtag.instagram-hashtag",
       "inversedBy": "products"
     },
-    "Info": {
-      "type": "dynamiczone",
-      "components": [
-        "product.wig-details"
-      ],
-      "required": true
-    },
     "cost": {
       "type": "biginteger",
       "required": true
@@ -77,6 +70,33 @@
       "type": "integer",
       "max": 100,
       "min": 0
+    },
+    "Details": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.details"
+    },
+    "Sales": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "cart"
+    },
+    "orders": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::order.order",
+      "mappedBy": "products"
     }
   }
 }

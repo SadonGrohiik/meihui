@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * buyer service
+ * order service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::buyer.buyer');
+module.exports = createCoreService('api::order.order');
