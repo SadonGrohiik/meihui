@@ -71,7 +71,7 @@
     },
     "full_name": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "province": {
       "type": "relation",
