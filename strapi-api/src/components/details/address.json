@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_details_addresses",
+  "info": {
+    "displayName": "Address"
+  },
+  "options": {},
+  "attributes": {
+    "postalCode": {
+      "type": "biginteger",
+      "required": true,
+      "min": "100000000",
+      "max": "999999999"
+    },
+    "Address": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

@@ -14,35 +14,43 @@
   "attributes": {
     "Name": {
       "type": "string",
-      "required": true,
-      "unique": true
+      "required": true
     },
     "Description": {
-      "type": "richtext"
+      "type": "text",
+      "required": true
     },
     "Price": {
       "type": "biginteger",
       "required": true
     },
     "Stock": {
-      "type": "biginteger"
+      "type": "integer",
+      "required": true
+    },
+    "discount": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "max": 100,
+      "default": 0
+    },
+    "Details": {
+      "displayName": "Details",
+      "type": "component",
+      "repeatable": true,
+      "component": "details.details"
+    },
+    "slug": {
+      "type": "string"
     },
     "Images": {
       "type": "media",
       "multiple": true,
       "required": true,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
-    },
-    "color": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::color.color",
-      "inversedBy": "products"
     },
     "category": {
       "type": "relation",
@@ -50,53 +58,10 @@
       "target": "api::category.category",
       "inversedBy": "products"
     },
-    "tags": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::tag.tag",
-      "inversedBy": "products"
-    },
-    "instagram_hashtags": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::instagram-hashtag.instagram-hashtag",
-      "inversedBy": "products"
-    },
-    "cost": {
-      "type": "biginteger",
-      "required": true
-    },
-    "discount": {
-      "type": "integer",
-      "max": 100,
-      "min": 0
-    },
-    "Details": {
-      "type": "component",
-      "repeatable": true,
-      "component": "product.details"
-    },
     "Sales": {
       "type": "integer",
       "required": true,
       "default": 0
-    },
-    "slug": {
-      "type": "string",
-      "required": true,
-      "unique": true
-    },
-    "users": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "plugin::users-permissions.user",
-      "mappedBy": "cart"
-    },
-    "orders": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::order.order",
-      "mappedBy": "products"
     }
   }
 }

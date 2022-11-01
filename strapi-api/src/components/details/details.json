@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_details_details",
+  "info": {
+    "displayName": "Details",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Value": {
+      "type": "string"
+    }
+  }
+}

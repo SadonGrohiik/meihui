@@ -8,12 +8,19 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
     "Name": {
-      "type": "string"
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "string",
+      "unique": true,
+      "required": true,
+      "regex": "/^\\S*$/"
     },
     "products": {
       "type": "relation",
@@ -21,23 +28,10 @@
       "target": "api::product.product",
       "mappedBy": "category"
     },
-    "Parent": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::category.category",
-      "inversedBy": "Children"
-    },
-    "Children": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::category.category",
-      "mappedBy": "Parent"
-    },
     "primary": {
-      "type": "boolean"
-    },
-    "slug": {
-      "type": "string"
+      "type": "boolean",
+      "default": true,
+      "required": true
     }
   }
 }

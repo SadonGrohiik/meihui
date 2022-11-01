@@ -63,39 +63,17 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "cart": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::product.product",
-      "inversedBy": "users"
-    },
-    "full_name": {
-      "type": "string",
-      "required": false
-    },
-    "province": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::province.province"
-    },
-    "city": {
+    "Name": {
       "type": "string"
     },
-    "phone": {
-      "type": "string",
-      "regex": "0\\d{10}",
-      "unique": true
+    "LastName": {
+      "type": "string"
     },
-    "postcode": {
-      "type": "string",
-      "regex": "\\d{10}",
-      "unique": false
-    },
-    "orders": {
+    "cart": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::order.order",
-      "mappedBy": "users_permissions_user"
+      "relation": "oneToOne",
+      "target": "api::cart.cart",
+      "inversedBy": "user"
     }
   }
 }

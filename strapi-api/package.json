@@ -11,27 +11,25 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@_sh/strapi-plugin-ckeditor": "^1.1.2",
-    "@exfabrica/strapi-plugin-awesome-help": "^1.0.8",
-    "@strapi/plugin-graphql": "^4.3.6",
-    "@strapi/plugin-i18n": "4.3.6",
-    "@strapi/plugin-seo": "^1.7.4",
-    "@strapi/plugin-users-permissions": "4.3.6",
-    "@strapi/strapi": "4.3.6",
-    "@strapi/utils": "^4.3.6",
+    "@strapi/plugin-color-picker": "^4.4.5",
+    "@strapi/plugin-graphql": "^4.4.4",
+    "@strapi/plugin-i18n": "4.4.4",
+    "@strapi/plugin-users-permissions": "4.4.4",
+    "@strapi/strapi": "4.4.4",
+    "@strapi/utils": "^4.4.5",
     "better-sqlite3": "7.4.6",
     "pg": "^8.8.0",
-    "strapi-plugin-custom-links": "^0.2.1",
-    "strapi-plugin-generate-data": "^1.0.16"
+    "strapi-plugin-generate-data": "^1.0.19",
+    "strapi-plugin-populate-deep": "^1.1.2"
   },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "f05560cf-02fb-480e-84cc-4597c7477ce9"
+    "uuid": "8a35c7c4-ea51-44f5-8429-257a4b91140b"
   },
   "engines": {
-    "node": ">=14.19.1 <=16.x.x",
+    "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT"
