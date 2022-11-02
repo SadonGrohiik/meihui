@@ -1,0 +1,98 @@
+@font-face {
+  font-family: 'Yekan';
+  font-weight: 300;
+  src: url('../assets/fonts/Qs_Iranyekan\ medium.ttf');
+  font-weight: 400;
+  src: url('../assets/fonts/Qs_Iranyekan\ bold.ttf');
+}
+
+@font-face {
+  font-family: 'Yekan';
+  font-weight: 500;
+  src: url('../assets/fonts/Qs_Iranyekan\ extrabold.ttf');
+  font-weight: 600;
+  src: url('../assets/fonts/Qs_Iranyekan\ black.ttf');
+  font-weight: 800;
+  src: url('../assets/fonts/Qs_Iranyekan\ extrablack.ttf');
+  font-weight: 1000;
+}
+
+@font-face {
+  font-family: 'Yekan';
+  font-weight: 200;
+  src: url('../assets/fonts/Qs_Iranyekan\ light.ttf');
+}
+
+
+html,
+::-moz-selection {
+  /* Code for Firefox */
+  color: rgb(255, 255, 255);
+  background: #88d0c3;
+}
+
+::selection {
+  color: rgb(255, 255, 255);
+  background: #88d0c3;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Yekan";
+  direction: rtl;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    color: white;
+    background: black;
+  }
+}
+
+li {
+  display: inline-block;
+  list-style: none;
+}
+
+label {
+  font-family: 'Yekan';
+  font-weight: 500;
+}
+
+.mantine-TextInput-input,
+.mantine-PasswordInput-innerInput {
+  text-align: right;
+  padding: 20px;
+  padding-right: 25px;
+  font-family: 'Yekan';
+  font-weight: 300;
+
+  &:focus {
+    border: 1.5px solid #88d0c3 !important;
+  }
+}
+
+
+
+.mantine-PasswordInput-rightSection {
+  left: 0;
+  right: 90%;
+}
+
+.mantine-15hjnfb[data-first] {
+  margin-top: -6px;
+}

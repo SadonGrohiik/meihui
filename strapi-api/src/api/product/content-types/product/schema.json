@@ -62,6 +62,15 @@
       "type": "integer",
       "required": true,
       "default": 0
+    },
+    "color": {
+      "type": "customField",
+      "required": true,
+      "customField": "plugin::color-picker.color"
+    },
+    "Cost": {
+      "type": "biginteger",
+      "required": true
     }
   }
 }
