@@ -22,12 +22,10 @@ import { useMediaQuery, useElementSize } from "@mantine/hooks";
 import { Carousel } from "@mantine/carousel";
 import { IconShoppingCartPlus } from "@tabler/icons";
 import Image from "next/image";
-import { getImageSize } from "next/dist/server/image-optimizer";
-import ProductList from "../product-list/[slug]";
-import { HoverCardDropdown } from "@mantine/core/lib/HoverCard/HoverCardDropdown/HoverCardDropdown";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+import AppContext from "../../context/AppContext";
 
 const useStyles = createStyles((theme) => ({
   carousel: {
@@ -76,6 +74,7 @@ const useStyles = createStyles((theme) => ({
   cartBtn: {
     fontWeight: 500,
     fontSize: 13,
+    height: 40,
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
       height: 45,
     },
@@ -85,37 +84,39 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-
 const ProductPage: NextPage = ({ product, productID }: any) => {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const { classes } = useStyles();
   const theme = useMantineTheme();
   const { ref, width, height } = useElementSize();
+  const { user, setUser } = useContext(AppContext);
+  const router = useRouter();
+
   let response = " ";
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
-  const token = Cookies.get('token');
+  const token = Cookies.get("token");
   useEffect(() => {
     setLoading(true);
-    async function getRes(){
+    async function getRes() {
       const res = await getUserInfo(token);
       setData(res?.data);
     }
-    try{
-    getRes();
-    }catch(e){
+    try {
+      getRes();
+    } catch (e) {
       console.log(e);
     }
     setLoading(false);
-  }, [])
-  
-  let cart : any[]=[];
+  }, []);
+
+  let cart: any[] = [];
   let cartID = data?.cart.id;
-  if(data){
-  data.cart.item.forEach((item : any)=> {
-    cart.push({"product" : item.product.id, "count": item.count})
-  });
-}
+  if (data) {
+    data.cart.item.forEach((item: any) => {
+      cart.push({ product: item.product.id, count: item.count });
+    });
+  }
 
   const carousel = (
     <Carousel
@@ -141,7 +142,6 @@ const ProductPage: NextPage = ({ product, productID }: any) => {
         ))}
     </Carousel>
   );
-
   const details = (
     <Card radius="sm" mt="xl" className={classes.midSection}>
       <Card.Section>
@@ -149,6 +149,19 @@ const ProductPage: NextPage = ({ product, productID }: any) => {
           <Title className={classes.title} order={4}>
             ویژگی‌ها
           </Title>
+          <div className={classes.detail}>
+            <Text
+              span
+              color="dark.2"
+              className={classes.detailName}
+              weight={400}
+            >
+              رنگ :{" "}
+            </Text>
+            <Text span inherit weight={600}>
+              {product.color.name}
+            </Text>
+          </div>
           {product.Details.map((detail: any) => (
             <div key={detail.id} className={classes.detail}>
               <Text
@@ -205,9 +218,13 @@ const ProductPage: NextPage = ({ product, productID }: any) => {
                     className={classes.cartBtn}
                     radius="md"
                     loading={isLoading}
-                    onClick= {()=>{
-                      
-                      console.log(addToCart(cart, cartID, {"product": productID, "count" : 1})); 
+                    onClick={() => {
+                      user
+                        ? addToCart(cart, cartID, {
+                            product: productID,
+                            count: 1,
+                          })
+                        : router.push("/login");
                     }}
                   >
                     {isLoading ? " " : " افزودن به سبد"}
@@ -231,7 +248,7 @@ export async function getServerSideProps(context: Context) {
   return {
     props: {
       product: data.products.data[0].attributes,
-      productID: data.products.data[0].id
+      productID: data.products.data[0].id,
     },
   };
 }
@@ -246,18 +263,26 @@ async function getProductBySlug(slug: string) {
   return res;
 }
 
-async function addToCart(cart : any[], cartid : any, item : any){
+async function addToCart(cart: any[], cartid: any, item: any) {
   let newCart = cart;
-  newCart.push(item);
-  console.log(newCart);
-  const req = {
-    "data": {
-        "item" : newCart
-    }
-  }
-  const res = await axios.put(`http://localhost:1337/api/carts/${cartid}`,req);
-return res;
-}
+  let products: any[] = [];
+  cart.forEach((item) => {
+    products.push(item.product);
+  });
 
+  console.log(products.includes(1));
+  if (products.includes(item.product)) {
+    newCart[products.indexOf(item.product)].count++;
+  } else {
+    newCart.push(item);
+  }
+  const req = {
+    data: {
+      item: newCart,
+    },
+  };
+  const res = await axios.put(`http://localhost:1337/api/carts/${cartid}`, req);
+  return res;
+}
 
 export default ProductPage;

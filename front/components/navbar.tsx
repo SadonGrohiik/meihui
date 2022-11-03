@@ -1,4 +1,3 @@
-
 import {
   createStyles,
   Menu,
@@ -28,7 +27,7 @@ import useFetch from "../util/useFetch";
 import Link from "next/link";
 import { MenuItem } from "@mantine/core/lib/Menu/MenuItem/MenuItem";
 import { ThemeContext } from "styled-components";
-import logoImg from "../assets/images/2x/logo.png";
+import { Logo } from "./logo";
 import React, { useContext } from "react";
 import AppContext from "../context/AppContext";
 import { logout } from "./lib/auth";
@@ -46,7 +45,7 @@ const colors = {
     "#bcb5d5",
     "#a7a1be",
     "#928da6",
-    "#7d798e"
+    "#7d798e",
   ],
 
   wine: [
@@ -59,7 +58,7 @@ const colors = {
     "#a56c86",
     "#905f75",
     "#7c5164",
-    "#674454"
+    "#674454",
   ],
   babyBlue: [
     "#c6e4f8",
@@ -71,7 +70,7 @@ const colors = {
     "#80a8c2",
     "#7093aa",
     "#607e92",
-    "#50697a"
+    "#50697a",
   ],
   neutral: [
     "#fefaf9",
@@ -83,9 +82,9 @@ const colors = {
     "#cbc8c7",
     "#b2afae",
     "#989695",
-    "#7f7d7d"
-  ]
-}
+    "#7f7d7d",
+  ],
+};
 const useStyles = createStyles((theme) => ({
   inner: {
     height: header_height,
@@ -178,7 +177,7 @@ const Navbar = () => {
   const theme = useMantineTheme();
   const button_color = theme.colors.prelude;
   const { classes } = useStyles();
-  
+
   const { loading, error, data } = useFetch(
     "http://localhost:1337/api/categories"
   );
@@ -209,15 +208,7 @@ const Navbar = () => {
   );
   const logo = (
     <Link href="/">
-      <Image
-        className={classes.logo}
-        src={logoImg}
-        alt={"meihui logo"}
-        width={65}
-        height={55}
-        objectFit="contain"
-        quality={30}
-      />
+      <Logo className={classes.logo} />
     </Link>
   );
 
@@ -234,21 +225,15 @@ const Navbar = () => {
           <UnstyledButton
             className={classes.navLink}
             onClick={() => {
-              
               logout();
               setUser(null);
-            
             }}
           >
             <Link href="/">خروج</Link>
           </UnstyledButton>
         </Menu.Item>
         <Link href="/profile">
-        <Menu.Item icon={<IconUser size={14} />}>
-         
-          پروفایل
-         
-        </Menu.Item>
+          <Menu.Item icon={<IconUser size={14} />}>پروفایل</Menu.Item>
         </Link>
       </Menu.Dropdown>
     </Menu>
@@ -276,12 +261,10 @@ const Navbar = () => {
       )}{" "}
       <Divider size="sm" orientation="vertical" />
       <Link href="/cart">
-      <Button className={classes.iconBtn} variant="subtle" color="dark">
-        &nbsp;&nbsp;
-
-        <IconBasket size="28px" strokeWidth="1.6" />
-
-      </Button>
+        <Button className={classes.iconBtn} variant="subtle" color="dark">
+          &nbsp;&nbsp;
+          <IconBasket size="28px" strokeWidth="1.6" />
+        </Button>
       </Link>
     </Group>
   );
@@ -299,7 +282,7 @@ const Navbar = () => {
             "#bcb5d5",
             "#a7a1be",
             "#928da6",
-            "#7d798e"
+            "#7d798e",
           ],
         },
       }}

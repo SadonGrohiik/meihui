@@ -66,6 +66,10 @@ attributes{
     Name,
     Value
   },
+  color{
+    name,
+    hex
+  },
   category{
     data{
       id
@@ -87,55 +91,50 @@ attributes{
 
 export function Q_postColor() {}
 
-export function Q_getCart(id: number){
-return gql`# Write your query or mutation here
-query getCart{
-carts(filters:{
-  user: {
-    id: {
-      eq: 1
-    }
-  }
-}){
-  data{
-    attributes{
-      item{
-        product{
-          data{
-          id
-            attributes{
-              Name,
-              Price,
-              Images{
-                data{
-                  attributes{
-                    url
+export function Q_getCart(id: number) {
+  return gql`
+    # Write your query or mutation here
+    query getCart {
+      carts(filters: { user: { id: { eq: 1 } } }) {
+        data {
+          attributes {
+            item {
+              product {
+                data {
+                  id
+                  attributes {
+                    Name
+                    Price
+                    Images {
+                      data {
+                        attributes {
+                          url
+                        }
+                      }
+                    }
                   }
                 }
               }
+              count
             }
           }
-        }, count
+        }
       }
     }
-  }
-}
-}
-
-`
+  `;
 }
 
-export async function getUserInfo(token: any){
-  
-  if(token){
-const config = {
-  headers: {
-      'Authorization' : `Bearer ${token}`
-  }
-}
-  let res = await axios.get("http://localhost:1337/api/users/me?populate=deep", config
-  
-  );
-  return res;
+export async function getUserInfo(token: any) {
+  if (token) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    let res = await axios.get(
+      "http://localhost:1337/api/users/me?populate=deep",
+      config
+    );
+    return res;
   }
 }

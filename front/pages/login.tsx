@@ -11,13 +11,32 @@ import {
   TextInput,
   Title,
   PasswordInput,
+  createStyles,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
 import AppContext from "../context/AppContext";
+import { Logo } from "../components/logo";
 
 import Cookies from "js-cookie";
 
+const useStyles = createStyles((theme) => ({
+  loginBtn: {
+    height: 45,
+    fontFamily: "Yekan",
+    fontWeight: 400,
+    fontSize: 16,
+    marginTop: 40,
+  },
+  title: {
+    fontFamily: "Yekan",
+    fontWeight: 400,
+  },
+  container: {
+    fontFamily: "Yekan",
+  },
+}));
+
 function Login(props: any) {
+  const { classes } = useStyles();
   const [data, updateData] = useState({ identifier: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -36,18 +55,30 @@ function Login(props: any) {
 
   return (
     <Box sx={{ maxWidth: 400 }} mx="auto">
-      <Paper withBorder shadow="md" p={30} mt={30} radius="lg">
+      <Paper
+        className={classes.container}
+        withBorder
+        px={20}
+        pt={20}
+        mt={"45%"}
+        radius="md"
+      >
+        <Logo />
+        <Title className={classes.title} order={4}>
+          {" "}
+          ورود | ثبت نام
+        </Title>
         <form>
           <TextInput
             onChange={(e) => onChange(e)}
             name="identifier"
             required
-            label="ایمیل"
+            label="ایمیل | نام کاربری"
             placeholder="ایمیل"
             type="email"
             mt="md"
             size="md"
-            radius="lg"
+            radius="md"
           />
 
           <PasswordInput
@@ -58,14 +89,15 @@ function Login(props: any) {
             placeholder="رمز عبور"
             mt="md"
             size="md"
-            radius="lg"
+            radius="md"
           />
           <Button
             fullWidth
-            mt="xl"
-            radius="xl"
+            radius="md"
+            color="marguerite"
+            my="xl"
+            className={classes.loginBtn}
             onClick={() => {
-              
               setLoading(true);
               login(data.identifier, data.password)
                 .then((res: any) => {
@@ -74,7 +106,6 @@ function Login(props: any) {
                   appContext.setUser(res.data.user);
                 })
                 .catch((error) => {
-                 
                   setError(error.response.data);
                   setLoading(false);
                 });
@@ -83,7 +114,7 @@ function Login(props: any) {
             disabled={loading}
             // type="submit"
           >
-            <Title order={6}> {loading ? " " : "ورود"}</Title>
+            {loading ? " " : "ورود"}
           </Button>
         </form>
       </Paper>
