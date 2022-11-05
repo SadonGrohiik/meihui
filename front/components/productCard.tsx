@@ -10,22 +10,32 @@ import {
   UnstyledButton,
   Group,
   Image as imgContainer,
-  SimpleGrid,
+  Paper,
   useMantineTheme,
+  Image as Imaj,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
+import { ClassNames } from "@emotion/react";
 
 const useStyles = createStyles((theme) => ({
   ProductCard: {
-    width: 240,
+    width: 230,
 
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-      width: 205,
+      width: 175,
     },
     "&:hover": {
-      boxShadow: "0px 2px 20px -4px #dbd5cb",
+      cursor: "pointer",
     },
+  },
+  image: {
+    borderRadius: 15,
+    overflow: "hidden",
+  },
+  oldPrice: {
+    position: "absolute",
+    marginTop: 20,
   },
 }));
 
@@ -33,54 +43,57 @@ export function ProductCard(props: any) {
   const { classes } = useStyles();
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
+  const imgSize = mobile ? 165 : 220;
   return (
     <li>
       <Link href={props.link}>
-        <Card
+        <Paper
           className={classes.ProductCard}
-          p="md"
-          pb="sm"
-          m="md"
-          radius="sm"
-          withBorder
+          p="xs"
+          pb={mobile ? "xs" : "sm"}
+          mr={mobile ? "xs" : "md"}
+          radius="xs"
         >
-          <Card.Section>
-            <Image
-              src={api_url + props.thumbnail}
-              alt={props.alt}
-              height={250}
-              width={250}
-              objectFit="cover"
-              quality={30}
-            />
-          </Card.Section>
-
+          <Imaj
+            src={api_url + props.thumbnail}
+            alt={props.alt}
+            height={imgSize}
+            width={imgSize}
+            radius="lg"
+            fit="cover"
+            withPlaceholder
+          />
           <Group position="apart" mt="xs" mb="xs">
-            <Text weight={500} size={mobile ? "sm" : "md"}>
+            <Text weight={400} size={mobile ? "sm" : "md"}>
               {props.name}
             </Text>
           </Group>
-
           {props.discount && props.discount > 0 && props.stock > 0 ? ( //Checks ford discount
             <Group position="apart" mt="lg">
               <Badge
                 color="marguerite"
                 variant="filled"
-                size={mobile ? "sm" : "md"}
+                size={mobile ? "md" : "lg"}
               >
                 {props.discount + "%"}
               </Badge>
-              <Text weight={500} size="xs" color="grey">
-                <s>{formatNum(props.price)}</s>
-              </Text>
-              <Text weight={500} size={mobile ? "sm" : "md"}>
+
+              <Text weight={400} size={mobile ? "sm" : "md"}>
+                <Text
+                  weight={400}
+                  size="xs"
+                  color="grey"
+                  className={classes.oldPrice}
+                >
+                  <s>{formatNum(props.price)}</s>
+                </Text>
                 {calculateDiscount(props.price, props.discount)}
               </Text>
             </Group>
           ) : (
             <Group position="right" mt="lg">
               <Text
-                weight={500}
+                weight={400}
                 size={mobile ? "sm" : "md"}
                 color={props.stock > 0 ? "dark" : "dark.2"}
               >
@@ -88,7 +101,7 @@ export function ProductCard(props: any) {
               </Text>
             </Group>
           )}
-        </Card>
+        </Paper>
       </Link>
     </li>
   );

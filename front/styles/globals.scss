@@ -10,11 +10,7 @@
   font-family: 'Yekan';
   font-weight: 500;
   src: url('../assets/fonts/Qs_Iranyekan\ extrabold.ttf');
-  font-weight: 600;
-  src: url('../assets/fonts/Qs_Iranyekan\ black.ttf');
-  font-weight: 800;
-  src: url('../assets/fonts/Qs_Iranyekan\ extrablack.ttf');
-  font-weight: 1000;
+
 }
 
 @font-face {
@@ -96,3 +92,12 @@ label {
 .mantine-15hjnfb[data-first] {
   margin-top: -6px;
 }
+@media screen and (max-width: 800px){
+  .mantine-1se158f{
+    margin: 0;
+  }
+  .mantine-Container-root{
+    margin-bottom: 100px;
+  }
+}
+

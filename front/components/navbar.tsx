@@ -13,7 +13,11 @@ import {
   useMantineTheme,
   Divider,
   UnstyledButton,
+  Text,
+  Paper,
+  Drawer,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
 import {
   IconChevronDown,
@@ -22,13 +26,17 @@ import {
   IconSearch,
   IconDoorEnter,
   IconDoorExit,
+  IconHome,
+  IconPlus,
+  IconMenu,
+  IconMenu2,
 } from "@tabler/icons";
 import useFetch from "../util/useFetch";
 import Link from "next/link";
 import { MenuItem } from "@mantine/core/lib/Menu/MenuItem/MenuItem";
 import { ThemeContext } from "styled-components";
 import { Logo } from "./logo";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import AppContext from "../context/AppContext";
 import { logout } from "./lib/auth";
 import Cookies from "js-cookie";
@@ -98,6 +106,21 @@ const useStyles = createStyles((theme) => ({
       display: `none`,
     },
   },
+  mobileLink: {
+    display: "block",
+    fontFamily: "Yekan",
+    fontWeight: 400,
+    fontSize: 18,
+    color: theme.colors.dark[3],
+    paddingBottom: 25,
+    direction: "rtl",
+    a: {},
+  },
+  menuLabel: {
+    fontFamily: "Yekan",
+    fontSize: 18,
+    fontWeight: 400,
+  },
   links: {
     marginLeft: -theme.spacing.sm,
 
@@ -137,7 +160,10 @@ const useStyles = createStyles((theme) => ({
     },
   },
   iconBtn: {
-    padding: 6,
+    [theme.fn.largerThan("sm")]: {
+      padding: 6,
+    },
+
     fontFamily: "Yekan",
     fontWeight: 400,
     "&:hover": {
@@ -151,14 +177,37 @@ const useStyles = createStyles((theme) => ({
     "&:focus": {
       borderColor: colors.prelude[4],
     },
+    [theme.fn.smallerThan("sm")]: {
+      maxWidth: "100%",
+    },
   },
-  rightHeader: {},
+  rightHeader: {
+    [theme.fn.smallerThan("sm")]: {
+      display: "none",
+    },
+  },
   leftHeader: {
     flexGrow: 1,
     marginRight: 50,
   },
   logo: {
     marginBottom: 4,
+  },
+  user: {
+    [theme.fn.smallerThan("sm")]: {
+      display: "none",
+    },
+  },
+  mobileMenu: {
+    [theme.fn.largerThan("sm")]: {
+      display: "none",
+    },
+    zIndex: 5,
+    position: "fixed",
+    width: "100%",
+    bottom: 0,
+    borderTop: `solid 1px ${theme.colors.gray[3]}`,
+    borderRadius: 0,
   },
   header: { paddingLeft: 0 },
 }));
@@ -177,7 +226,8 @@ const Navbar = () => {
   const theme = useMantineTheme();
   const button_color = theme.colors.prelude;
   const { classes } = useStyles();
-
+  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
+  const [opened, setOpened]: any = useState();
   const { loading, error, data } = useFetch(
     "http://localhost:1337/api/categories"
   );
@@ -196,7 +246,23 @@ const Navbar = () => {
       );
     }
   });
-
+  const mobileLinks = categories.map((category: any) => {
+    if (category.attributes.primary) {
+      return (
+        <UnstyledButton
+          key={category.id}
+          onClick={() => {
+            setOpened(false);
+          }}
+          className={classes.mobileLink}
+        >
+          <Link href={`/product-list/${category.attributes.slug}/`}>
+            <a>{category.attributes.Name}</a>
+          </Link>
+        </UnstyledButton>
+      );
+    }
+  });
   const searchBar = (
     <TextInput
       className={classes.searchBar}
@@ -221,7 +287,7 @@ const Navbar = () => {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>{user?.Name}</Menu.Label>
-        <Menu.Item icon={<IconDoorExit size={14} />}>
+        <Menu.Item icon={<IconDoorExit size={30} />}>
           <UnstyledButton
             className={classes.navLink}
             onClick={() => {
@@ -233,14 +299,32 @@ const Navbar = () => {
           </UnstyledButton>
         </Menu.Item>
         <Link href="/profile">
-          <Menu.Item icon={<IconUser size={14} />}>پروفایل</Menu.Item>
+          <Menu.Item icon={<IconUser size={30} />}>
+            <Text size="lg" className={classes.menuLabel}>
+              پروفایل
+            </Text>
+          </Menu.Item>
         </Link>
       </Menu.Dropdown>
     </Menu>
   );
-
+  const cartBtn = (
+    <Link href="/cart">
+      <Button
+        className={classes.iconBtn}
+        variant="subtle"
+        color={mobile ? "gray" : "dark"}
+      >
+        &nbsp;&nbsp;
+        <IconBasket
+          size={mobile ? "32px" : "28px"}
+          strokeWidth={mobile ? "2" : "1.6"}
+        />
+      </Button>
+    </Link>
+  );
   const icons = (
-    <Group position="right" spacing="xs" p={"xs"}>
+    <>
       {user ? (
         <>{accountMenu}</>
       ) : (
@@ -260,13 +344,52 @@ const Navbar = () => {
         </Link>
       )}{" "}
       <Divider size="sm" orientation="vertical" />
-      <Link href="/cart">
-        <Button className={classes.iconBtn} variant="subtle" color="dark">
-          &nbsp;&nbsp;
-          <IconBasket size="28px" strokeWidth="1.6" />
+      {cartBtn}
+    </>
+  );
+
+  const mobileBtnProps = {
+    variant: "subtle",
+    color: "gray",
+    px: "xs",
+  };
+  const mobileMenu = (
+    <Paper className={classes.mobileMenu}>
+      <Group position="apart" grow p="lg" spacing="xs">
+        <Link href="/">
+          <Button
+            className={classes.mobileBtn}
+            variant={mobileBtnProps.variant}
+            color={mobileBtnProps.color}
+            px={mobileBtnProps.px}
+          >
+            <IconHome size="32px" strokeWidth="2" />
+            {/* change this */}
+          </Button>
+        </Link>
+        <Button
+          className={classes.mobileBtn}
+          variant={mobileBtnProps.variant}
+          color={mobileBtnProps.color}
+          px={mobileBtnProps.px}
+          onClick={() => setOpened(true)}
+        >
+          <IconMenu2 size="32px" strokeWidth="2" />
         </Button>
-      </Link>
-    </Group>
+
+        {cartBtn}
+        <Link href={user ? "/profile" : "/login"}>
+          <Button
+            className={classes.mobileBtn}
+            variant={mobileBtnProps.variant}
+            color={mobileBtnProps.color}
+            px={mobileBtnProps.px}
+          >
+            <IconUser size="32px" strokeWidth="2" />
+          </Button>
+        </Link>
+      </Group>
+    </Paper>
   );
   return (
     <MantineProvider
@@ -296,12 +419,31 @@ const Navbar = () => {
             </Group>
           </Group>
 
-          <Group className={classes.leftHeader} position="left" spacing="lg">
+          <Group className={classes.leftHeader} position="left">
             {searchBar}
-            {icons}
+            <Group
+              position="right"
+              spacing="xs"
+              p={"xs"}
+              className={classes.user}
+            >
+              {icons}
+            </Group>
           </Group>
         </Container>
       </Header>
+      <Drawer
+        className={classes.mobileContents}
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="دسته بندی"
+        padding="xl"
+        size="xl"
+        position="right"
+      >
+        <div>{mobileLinks}</div>
+      </Drawer>
+      {mobileMenu}
     </MantineProvider>
   );
 };

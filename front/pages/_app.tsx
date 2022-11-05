@@ -10,8 +10,16 @@ import AppContext from "../context/AppContext";
 import React from "react";
 import App from "next/app";
 import { color } from "../util/util";
-
+import Router from "next/router";
+import NProgress from "nprogress";
+import "../styles/components/nprogress.scss";
 // import withData from "../lib/apollo";
+Router.events.on("routeChangeStart", () => NProgress.start());
+
+Router.events.on("routeChangeComplete", () => NProgress.done());
+
+Router.events.on("routeChangeError", () => NProgress.done());
+NProgress.configure({ showSpinner: false });
 
 class MyApp extends App {
   state = {

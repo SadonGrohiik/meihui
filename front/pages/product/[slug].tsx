@@ -26,6 +26,7 @@ import { useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import AppContext from "../../context/AppContext";
+import addToCart from "../../util/addToCart";
 
 const useStyles = createStyles((theme) => ({
   carousel: {
@@ -51,7 +52,7 @@ const useStyles = createStyles((theme) => ({
   },
   title: {
     fontFamily: "Yekan",
-    fontWeight: 500,
+    fontWeight: 400,
     marginBottom: 10,
   },
   midSection: {
@@ -78,9 +79,6 @@ const useStyles = createStyles((theme) => ({
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
       height: 45,
     },
-    "&:hover": {
-      backgroundColor: theme.colors.marguerite[6],
-    },
   },
 }));
 
@@ -93,21 +91,22 @@ const ProductPage: NextPage = ({ product, productID }: any) => {
   const { user, setUser } = useContext(AppContext);
   const router = useRouter();
 
-  let response = " ";
+  Cookies.get("cart") && console.log(JSON.parse(Cookies.get("cart")));
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
   const token = Cookies.get("token");
   useEffect(() => {
-    setLoading(true);
     async function getRes() {
+      setLoading(true);
       const res = await getUserInfo(token);
       setData(res?.data);
     }
     try {
       getRes();
+      setLoading(false);
     } catch (e) {
       console.log(e);
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   let cart: any[] = [];
@@ -117,7 +116,14 @@ const ProductPage: NextPage = ({ product, productID }: any) => {
       cart.push({ product: item.product.id, count: item.count });
     });
   }
-
+  const index = cart.map((e) => e.product).indexOf(productID);
+  let btnDisable: boolean = false;
+  if (product.Stock <= 0) {
+    btnDisable = true;
+  } else if (index > -1) {
+    btnDisable = cart[index].count >= product.Stock;
+  }
+  console.log(index);
   const carousel = (
     <Carousel
       ref={ref}
@@ -213,6 +219,7 @@ const ProductPage: NextPage = ({ product, productID }: any) => {
                   className={classes.cartCardSection}
                 >
                   <Button
+                    disabled={btnDisable}
                     fullWidth
                     color="marguerite"
                     className={classes.cartBtn}
@@ -260,28 +267,6 @@ async function getProductBySlug(slug: string) {
     `,
   });
 
-  return res;
-}
-
-async function addToCart(cart: any[], cartid: any, item: any) {
-  let newCart = cart;
-  let products: any[] = [];
-  cart.forEach((item) => {
-    products.push(item.product);
-  });
-
-  console.log(products.includes(1));
-  if (products.includes(item.product)) {
-    newCart[products.indexOf(item.product)].count++;
-  } else {
-    newCart.push(item);
-  }
-  const req = {
-    data: {
-      item: newCart,
-    },
-  };
-  const res = await axios.put(`http://localhost:1337/api/carts/${cartid}`, req);
   return res;
 }
 
